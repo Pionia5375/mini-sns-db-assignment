@@ -1,0 +1,65 @@
+<!doctype html>
+<html lang="ko"><head><meta charset="utf-8"><link rel="stylesheet" href="../style.css"></head>
+<body>
+<section class="slide">
+
+  <div class="eyebrow"><span class="num">10</span><span>의미 있는 SELECT · 피드 1쿼리</span></div>
+
+  <h2 class="h-1" style="margin-bottom:48px;">
+    피드 한 화면을 <span class="hl-mint">단일 쿼리</span>로.
+  </h2>
+
+  <div class="row" style="gap:48px; align-items:stretch;">
+
+    <div class="code" style="flex:1.5; font-size:24px; line-height:1.6;"><span class="key">SELECT</span> p.id,
+       p.content,
+       p.like_count,
+       p.comment_count,
+       p.tip_total,
+       p.created_at,
+       u.username <span class="key">AS</span> author_username,
+       (l.user_id <span class="key">IS NOT NULL</span>) <span class="key">AS</span> liked_by_me
+  <span class="key">FROM</span> posts p
+  <span class="acc">JOIN</span>      users u <span class="key">ON</span> u.id = p.author_id
+  <span class="acc">LEFT JOIN</span> likes l <span class="key">ON</span> l.post_id = p.id
+                  <span class="key">AND</span> l.user_id = $viewer
+ <span class="key">ORDER BY</span> p.created_at <span class="key">DESC</span>
+ <span class="key">LIMIT</span> <span class="num">50</span>;</div>
+
+    <div class="col" style="flex:1; gap:28px;">
+      <div class="card">
+        <div class="tag mint mono" style="margin-bottom:14px;">JOIN users</div>
+        <p class="body" style="margin:0;">
+          작성자 정보는 <span class="hl-mint">필수 관계</span> → 내부 조인.
+        </p>
+      </div>
+      <div class="card">
+        <div class="tag mint mono" style="margin-bottom:14px;">LEFT JOIN likes</div>
+        <p class="body" style="margin:0;">
+          내 좋아요는 <span class="hl-mint">있을 수도</span> 없을 수도.<br>
+          <span class="mono hl-mint">l.user_id IS NOT NULL</span> 로 boolean 변환.
+        </p>
+      </div>
+      <div class="card">
+        <div class="tag mint mono" style="margin-bottom:14px;">N+1 없음</div>
+        <p class="body" style="margin:0;">
+          글 50개 × 작성자 SELECT × 좋아요 SELECT<br>
+          → <span class="hl-mint">왕복 1번</span>. 인덱스가 정렬 비용까지 최소화.
+        </p>
+      </div>
+    </div>
+
+  </div>
+
+  <div class="card" style="margin-top:48px; padding:24px 40px;">
+    <p class="body lg mono muted" style="margin:0;">
+      <span class="hl-mint">INDEX</span> posts(created_at DESC) · posts(author_id, created_at DESC) · likes(post_id) · follows(followee_id)
+    </p>
+  </div>
+
+  <div class="footer">
+    <span class="left">MiniSNS · DB 과제</span>
+    <span class="pageno">11 / 12</span>
+  </div>
+</section>
+</body></html>

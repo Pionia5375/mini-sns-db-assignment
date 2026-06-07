@@ -1,0 +1,62 @@
+<!doctype html>
+<html lang="ko"><head><meta charset="utf-8"><link rel="stylesheet" href="../style.css"></head>
+<body>
+<section class="slide">
+
+  <div class="eyebrow"><span class="num">03</span><span>데이터 모델 · 6 릴레이션</span></div>
+
+  <h2 class="h-2" style="margin-bottom:64px;">
+    역할별로 묶으면 <span class="hl-mint">세 그룹</span>이 보인다.
+  </h2>
+
+  <div class="row" style="gap:32px; align-items:stretch;">
+
+    <div class="card" style="flex:1; border-color:rgba(94,234,212,0.35);">
+      <div class="tag mint mono" style="margin-bottom:24px;">CORE</div>
+      <h3 class="h-4 hl-mint mono" style="margin-bottom:24px;">핵심 엔티티</h3>
+      <ul class="check-list" style="font-size:30px;">
+        <li><span class="mono">users</span></li>
+        <li><span class="mono">posts</span></li>
+        <li><span class="mono">comments</span></li>
+      </ul>
+    </div>
+
+    <div class="card" style="flex:1; border-color:rgba(244,114,182,0.35);">
+      <div class="tag pink mono" style="margin-bottom:24px;">N : M</div>
+      <h3 class="h-4 hl-pink mono" style="margin-bottom:24px;">다대다 교차</h3>
+      <ul class="check-list" style="font-size:30px;">
+        <li><span class="mono">likes</span> <span class="hl-dim" style="font-size:22px;">PK(user, post)</span></li>
+        <li><span class="mono">follows</span> <span class="hl-dim" style="font-size:22px;">PK(from, to)</span></li>
+      </ul>
+      <p class="body muted mono" style="margin-top:18px; font-size:22px;">
+        복합 PK 가 동시 이중 INSERT 를 막아준다.
+      </p>
+    </div>
+
+    <div class="card" style="flex:1; border-color:rgba(251,191,36,0.35);">
+      <div class="tag amber mono" style="margin-bottom:24px;">LEDGER</div>
+      <h3 class="h-4 hl-amber mono" style="margin-bottom:24px;">금융 원장</h3>
+      <ul class="check-list" style="font-size:30px;">
+        <li><span class="mono">credit_ledger</span></li>
+      </ul>
+      <p class="body muted mono" style="margin-top:18px; font-size:22px;">
+        append-only 분개. 잔액에 의심이 생기면 합산만 다시 해보면 된다.
+      </p>
+    </div>
+
+  </div>
+
+  <div class="card" style="margin-top:48px; padding:28px 40px;">
+    <p class="body lg" style="margin:0;">
+      <span class="tag mono" style="margin-right:14px;">DENORMALIZED</span>
+      <span class="mono hl-mint">like_count</span> · <span class="mono hl-mint">follower_count</span> · <span class="mono hl-mint">tip_total</span>
+      <span class="muted"> — 조회 성능을 위한 캐시. 정합성은 다음 슬라이드부터 트랜잭션이 떠받친다.</span>
+    </p>
+  </div>
+
+  <div class="footer">
+    <span class="left">MiniSNS · DB 과제</span>
+    <span class="pageno">04 / 12</span>
+  </div>
+</section>
+</body></html>

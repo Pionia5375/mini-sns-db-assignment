@@ -1,0 +1,50 @@
+<!doctype html>
+<html lang="ko"><head><meta charset="utf-8"><link rel="stylesheet" href="../style.css"></head>
+<body>
+<section class="slide">
+
+  <div class="eyebrow"><span class="num">04</span><span>비정규화 카운터의 trade-off</span></div>
+
+  <h2 class="h-1" style="margin-bottom:64px;">
+    왜 <span class="mono hl-mint">like_count</span> 컬럼을 따로 두는가.
+  </h2>
+
+  <div class="col-2">
+
+    <div class="card" style="border-color:rgba(244,114,182,0.35);">
+      <div class="tag pink mono" style="margin-bottom:24px;">❌ 정규화 only</div>
+      <div class="code lg" style="margin-bottom:24px; font-size:24px;"><span class="key">SELECT</span> <span class="fn">count</span>(*) <span class="key">FROM</span> likes
+ <span class="key">WHERE</span> post_id = $1;</div>
+      <p class="body lg" style="margin:0;">
+        매 피드 조회마다 <span class="mono hl-pink">COUNT(*)</span><br>
+        글 N개, 좋아요 M명이면 <span class="mono hl-pink">O(N × M)</span>
+      </p>
+    </div>
+
+    <div class="card elevated">
+      <div class="tag mint mono" style="margin-bottom:24px;">✓ 비정규화 카운터</div>
+      <div class="code lg" style="margin-bottom:24px; font-size:24px;"><span class="key">SELECT</span> like_count <span class="key">FROM</span> posts
+ <span class="key">WHERE</span> id = $1;</div>
+      <p class="body lg" style="margin:0;">
+        컬럼 한 번 읽으면 끝 <span class="mono hl-mint">O(1)</span>.<br>
+        단, 카운터와 likes 행이 어긋날 위험.
+      </p>
+    </div>
+
+  </div>
+
+  <div class="card" style="margin-top:64px; background:linear-gradient(135deg, rgba(94,234,212,0.08), rgba(94,234,212,0.02)); border-color:rgba(94,234,212,0.4);">
+    <p class="h-3" style="margin:0;">
+      해결책 <span class="hl-mint">→</span> 좋아요 <span class="mono">INSERT</span> 와 <span class="mono">UPDATE like_count</span> 를 한 트랜잭션으로 묶는다.
+    </p>
+    <p class="body lg muted" style="margin-top:18px;">
+      성능은 비정규화가, 정합성은 트랜잭션이 떠받친다. 다음 세 슬라이드에서 코드로.
+    </p>
+  </div>
+
+  <div class="footer">
+    <span class="left">MiniSNS · DB 과제</span>
+    <span class="pageno">05 / 12</span>
+  </div>
+</section>
+</body></html>

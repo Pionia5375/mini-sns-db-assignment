@@ -1,0 +1,60 @@
+<!doctype html>
+<html lang="ko"><head><meta charset="utf-8"><link rel="stylesheet" href="../style.css"></head>
+<body>
+<section class="slide">
+
+  <div class="eyebrow"><span class="num">08</span><span>라이브 데모 · 후원 50P</span></div>
+
+  <h2 class="h-2" style="margin-bottom:32px;">
+    실제로 트랜잭션이 <span class="hl-mint">잔액·게시글·원장</span>을 동시에 바꾼다.
+  </h2>
+
+  <div class="row" style="gap:32px; align-items:stretch;">
+
+    <div class="col" style="flex:1; gap:18px;">
+      <div class="tag pink mono" style="align-self:flex-start;">BEFORE — alice 205 P · bob 180 P</div>
+      <img class="shot" src="../../screenshots/08-ledger-before.png" alt="ledger before" style="max-height:440px; object-fit:cover; object-position:top;">
+      <p class="body muted mono" style="font-size:22px; margin:0;">
+        시드 직후 alice 의 후원 내역 2건 (bob → alice, alice → eve).
+      </p>
+    </div>
+
+    <div style="display:flex; align-items:center; font-size:80px; color:var(--accent); font-weight:200;">→</div>
+
+    <div class="col" style="flex:1; gap:18px;">
+      <div class="tag mint mono" style="align-self:flex-start;">AFTER — alice 155 P · bob 230 P</div>
+      <img class="shot" src="../../screenshots/10-ledger-after-tip.png" alt="ledger after" style="max-height:440px; object-fit:cover; object-position:top;">
+      <p class="body mono" style="font-size:22px; margin:0;">
+        <span class="hl-pink">보냄 −50 P → @bob #2</span> 행 추가, 잔액 <span class="hl-mint">155 P</span> 로.
+      </p>
+    </div>
+
+  </div>
+
+  <div class="card" style="margin-top:28px; padding:20px 32px;">
+    <div class="row center" style="gap:40px; justify-content:space-around;">
+      <div class="stat">
+        <span class="label">alice · 잔액</span>
+        <span class="value pink" style="font-size:60px;">−50 P</span>
+      </div>
+      <div class="stat">
+        <span class="label">bob · 잔액</span>
+        <span class="value" style="font-size:60px;">+50 P</span>
+      </div>
+      <div class="stat">
+        <span class="label">posts.tip_total</span>
+        <span class="value" style="font-size:60px;">+50 P</span>
+      </div>
+      <div class="stat">
+        <span class="label">credit_ledger</span>
+        <span class="value" style="font-size:60px;">+1 행</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="footer">
+    <span class="left">MiniSNS · DB 과제</span>
+    <span class="pageno">09 / 12</span>
+  </div>
+</section>
+</body></html>

@@ -1,0 +1,315 @@
+/* ===========================================================
+   MiniSNS 발표용 슬라이드 디자인 시스템
+   1920×1080, 다크 + 민트 액센트, 절제된 타이포
+   =========================================================== */
+
+@import url("https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css");
+@import url("https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;700&display=swap");
+
+:root {
+  --bg:        #0a0e1a;
+  --bg-grad-a: #0c1322;
+  --bg-grad-b: #060912;
+  --surface:   #131a26;
+  --surface-2: #1a2333;
+  --border:    #243044;
+  --border-strong: #3a4b66;
+  --text:      #e7ecf3;
+  --muted:     #8a97ad;
+  --dim:       #5c6a82;
+
+  --accent:    #5eead4;      /* mint */
+  --accent-d:  #2dd4bf;
+  --accent-2:  #f472b6;      /* hot pink (sender / 보냄) */
+  --accent-3:  #fbbf24;      /* amber (highlights) */
+
+  --code-bg:   #0d1421;
+  --code-key:  #ff7b72;      /* keyword */
+  --code-fn:   #d2a8ff;      /* function */
+  --code-str:  #a5d6ff;      /* string */
+  --code-num:  #79c0ff;      /* number */
+  --code-com:  #6b7689;      /* comment */
+}
+
+* { box-sizing: border-box; }
+
+html, body {
+  margin: 0;
+  padding: 0;
+  width: 1920px;
+  height: 1080px;
+  font-family: "Pretendard Variable", Pretendard, -apple-system, "Apple SD Gothic Neo", sans-serif;
+  color: var(--text);
+  font-feature-settings: "ss06", "case", "tnum";
+  -webkit-font-smoothing: antialiased;
+  text-rendering: geometricPrecision;
+  overflow: hidden;
+}
+
+.slide {
+  position: relative;
+  width: 1920px;
+  height: 1080px;
+  padding: 80px 120px;
+  background:
+    radial-gradient(ellipse 1400px 900px at 20% 0%,    rgba(94, 234, 212, 0.08), transparent 60%),
+    radial-gradient(ellipse 1200px 800px at 100% 100%, rgba(244, 114, 182, 0.05), transparent 60%),
+    linear-gradient(160deg, var(--bg-grad-a) 0%, var(--bg-grad-b) 100%);
+  overflow: hidden;
+}
+
+/* 일관된 헤더 / 푸터 ----------------------------------------- */
+
+.eyebrow {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  font-family: "JetBrains Mono", monospace;
+  font-size: 20px;
+  font-weight: 500;
+  color: var(--accent);
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  margin-bottom: 32px;
+}
+.eyebrow .num {
+  display: inline-block;
+  background: var(--accent);
+  color: var(--bg);
+  font-weight: 700;
+  padding: 4px 14px;
+  border-radius: 999px;
+  font-size: 18px;
+}
+
+.footer {
+  position: absolute;
+  left: 120px;
+  right: 120px;
+  bottom: 50px;
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  font-family: "JetBrains Mono", monospace;
+  font-size: 18px;
+  color: var(--dim);
+  letter-spacing: 0.05em;
+}
+.footer .left { color: var(--muted); }
+.footer .pageno { color: var(--accent); font-weight: 600; }
+
+/* 타이포 ----------------------------------------------------- */
+
+h1, h2, h3 { margin: 0; font-weight: 800; letter-spacing: -0.02em; line-height: 1.05; }
+
+.h-display {
+  font-size: 180px;
+  font-weight: 900;
+  letter-spacing: -0.04em;
+  line-height: 0.95;
+  background: linear-gradient(135deg, #ffffff 0%, var(--accent) 70%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+.h-1 { font-size: 96px;  line-height: 1.05; }
+.h-2 { font-size: 72px;  line-height: 1.1; }
+.h-3 { font-size: 54px;  line-height: 1.15; }
+.h-4 { font-size: 40px;  line-height: 1.25; font-weight: 700; }
+
+.body {
+  font-size: 28px;
+  line-height: 1.55;
+  color: var(--text);
+  max-width: 1500px;
+}
+.body.lg { font-size: 32px; }
+.body.muted { color: var(--muted); }
+
+.mono { font-family: "JetBrains Mono", monospace; }
+
+/* 강조 표시 ---------------------------------------------------*/
+
+.hl-mint  { color: var(--accent);   }
+.hl-pink  { color: var(--accent-2); }
+.hl-amber { color: var(--accent-3); }
+.hl-dim   { color: var(--muted);    }
+
+.tag {
+  display: inline-block;
+  padding: 6px 14px;
+  font-family: "JetBrains Mono", monospace;
+  font-size: 20px;
+  font-weight: 500;
+  border-radius: 999px;
+  border: 1px solid var(--border-strong);
+  color: var(--muted);
+  background: rgba(255,255,255,0.02);
+}
+.tag.mint  { color: var(--accent);   border-color: rgba(94,234,212,0.4); }
+.tag.pink  { color: var(--accent-2); border-color: rgba(244,114,182,0.4); }
+.tag.amber { color: var(--accent-3); border-color: rgba(251,191,36,0.4); }
+
+/* 카드 / 컨테이너 -------------------------------------------- */
+
+.card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 24px;
+  padding: 40px;
+}
+.card.elevated {
+  background: linear-gradient(180deg, rgba(94,234,212,0.04), rgba(94,234,212,0) 60%), var(--surface);
+  border-color: rgba(94,234,212,0.3);
+}
+
+/* 코드 블록 ---------------------------------------------------*/
+
+.code {
+  font-family: "JetBrains Mono", monospace;
+  font-size: 24px;
+  line-height: 1.5;
+  background: var(--code-bg);
+  border: 1px solid var(--border);
+  border-radius: 18px;
+  padding: 32px 40px;
+  color: var(--text);
+  overflow: hidden;
+  white-space: pre;
+}
+.code.sm   { font-size: 20px; line-height: 1.55; padding: 24px 30px; }
+.code.lg   { font-size: 28px; }
+.code .key { color: var(--code-key);  font-weight: 600; }
+.code .fn  { color: var(--code-fn);   }
+.code .str { color: var(--code-str);  }
+.code .num { color: var(--code-num);  }
+.code .com { color: var(--code-com);  font-style: italic; }
+.code .acc { color: var(--accent);    font-weight: 600; }
+
+/* 화살표 / 다이어그램 ----------------------------------------- */
+
+.arrow {
+  display: inline-flex;
+  align-items: center;
+  color: var(--muted);
+  font-family: "JetBrains Mono", monospace;
+}
+
+/* ACID 그리드 -------------------------------------------------*/
+
+.acid-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 28px;
+}
+.acid-grid .letter {
+  font-size: 200px;
+  font-weight: 900;
+  background: linear-gradient(135deg, var(--accent), #ffffff);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  line-height: 0.85;
+  margin-bottom: 18px;
+}
+
+/* 그리드 유틸 -------------------------------------------------*/
+
+.row  { display: flex; gap: 40px; align-items: flex-start; }
+.row.center { align-items: center; }
+.col  { display: flex; flex-direction: column; gap: 28px; }
+.col-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 48px; }
+
+/* 스크린샷 프레임 --------------------------------------------*/
+
+.shot {
+  width: 100%;
+  display: block;
+  border-radius: 12px;
+  border: 1px solid var(--border-strong);
+  box-shadow: 0 30px 80px -20px rgba(0,0,0,0.6);
+}
+
+/* 키-값 통계 -------------------------------------------------*/
+
+.stat {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+.stat .label {
+  font-family: "JetBrains Mono", monospace;
+  font-size: 18px;
+  letter-spacing: 0.1em;
+  color: var(--muted);
+  text-transform: uppercase;
+}
+.stat .value {
+  font-size: 84px;
+  font-weight: 800;
+  line-height: 1;
+  color: var(--accent);
+  font-family: "JetBrains Mono", monospace;
+  letter-spacing: -0.02em;
+}
+.stat .value.pink { color: var(--accent-2); }
+
+/* 체크 리스트 -------------------------------------------------*/
+
+.check-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  font-size: 28px;
+  line-height: 1.5;
+}
+.check-list li {
+  display: flex;
+  align-items: baseline;
+  gap: 16px;
+  padding: 12px 0;
+  border-bottom: 1px dashed var(--border);
+}
+.check-list li::before {
+  content: "✓";
+  color: var(--accent);
+  font-family: "JetBrains Mono", monospace;
+  font-weight: 700;
+  font-size: 28px;
+  flex-shrink: 0;
+}
+.check-list li:last-child { border-bottom: none; }
+
+/* 화살표 흐름 -------------------------------------------------*/
+
+.flow {
+  display: flex;
+  align-items: stretch;
+  gap: 28px;
+}
+.flow .node {
+  flex: 1;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 20px;
+  padding: 36px;
+  text-align: center;
+}
+.flow .node .title {
+  font-size: 36px;
+  font-weight: 700;
+  margin-bottom: 12px;
+}
+.flow .node .sub {
+  font-family: "JetBrains Mono", monospace;
+  font-size: 22px;
+  color: var(--muted);
+}
+.flow .arrow {
+  display: flex;
+  align-items: center;
+  font-size: 60px;
+  color: var(--accent);
+  font-weight: 200;
+}

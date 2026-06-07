@@ -1,0 +1,58 @@
+<!doctype html>
+<html lang="ko"><head><meta charset="utf-8"><link rel="stylesheet" href="../style.css"></head>
+<body>
+<section class="slide">
+
+  <div class="eyebrow"><span class="num">02</span><span>시스템 아키텍처</span></div>
+
+  <h2 class="h-1">단순한 3계층, <span class="hl-mint">한 함수 = 한 트랜잭션</span>.</h2>
+
+  <div class="flow" style="margin-top:120px;">
+    <div class="node">
+      <div class="title">브라우저</div>
+      <div class="sub">React 19 · Tailwind v4</div>
+      <div style="margin-top:28px; color:var(--accent); font-family:'JetBrains Mono',monospace; font-size:20px;">
+        &lt;form action={tipAction}&gt;
+      </div>
+    </div>
+    <div class="arrow">→</div>
+    <div class="node">
+      <div class="title">Next.js 16</div>
+      <div class="sub">Server Action</div>
+      <div style="margin-top:28px; color:var(--accent); font-family:'JetBrains Mono',monospace; font-size:20px;">
+        withTx(async (tx) => …)
+      </div>
+    </div>
+    <div class="arrow">→</div>
+    <div class="node">
+      <div class="title">PostgreSQL 16</div>
+      <div class="sub">pg 드라이버 · Docker</div>
+      <div style="margin-top:28px; color:var(--accent); font-family:'JetBrains Mono',monospace; font-size:20px;">
+        BEGIN · SQL · COMMIT
+      </div>
+    </div>
+  </div>
+
+  <div class="row" style="margin-top:120px;">
+    <div class="card" style="flex:1;">
+      <div class="tag mint mono" style="margin-bottom:18px;">DESIGN CHOICE</div>
+      <p class="body lg" style="margin:0;">
+        <span class="hl-mint mono">ORM 미사용</span> — SQL 을 그대로 보여주는 것이
+        <br>학습 목적에 부합. 모든 쿼리는 lib/queries.ts 에 명시.
+      </p>
+    </div>
+    <div class="card" style="flex:1;">
+      <div class="tag mint mono" style="margin-bottom:18px;">TRANSACTION BOUNDARY</div>
+      <p class="body lg" style="margin:0;">
+        <span class="hl-mint mono">Server Action 1개 = 트랜잭션 1개</span>.
+        <br>throw → ROLLBACK, return → COMMIT. 단순함이 곧 안전성.
+      </p>
+    </div>
+  </div>
+
+  <div class="footer">
+    <span class="left">MiniSNS · DB 과제</span>
+    <span class="pageno">03 / 12</span>
+  </div>
+</section>
+</body></html>

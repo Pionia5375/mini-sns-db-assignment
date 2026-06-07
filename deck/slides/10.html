@@ -1,0 +1,66 @@
+<!doctype html>
+<html lang="ko"><head><meta charset="utf-8"><link rel="stylesheet" href="../style.css"></head>
+<body>
+<section class="slide">
+
+  <div class="eyebrow"><span class="num">09</span><span>통합 테스트로 입증한 정합성</span></div>
+
+  <h2 class="h-2" style="margin-bottom:48px;">
+    <span class="mono hl-mint">npm run db:test</span> — 세 시나리오, 모두 통과.
+  </h2>
+
+  <div class="row" style="gap:32px; align-items:stretch;">
+
+    <div class="code" style="flex:1.4; font-size:21px; background:#06080e; border:1px solid var(--border-strong); padding:32px 36px; line-height:1.55;"><span class="com">$ npm run db:test</span>
+
+<span class="acc">=== 시나리오 1: 정상 후원 (alice → bob, 10P) ===</span>
+  <span class="hl-mint">✅</span> alice 잔액 -10: 195
+  <span class="hl-mint">✅</span> bob   잔액 +10: 190
+  <span class="hl-mint">✅</span> post  tip_total +10: 10
+  <span class="hl-mint">✅</span> ledger 행 +1: 4
+
+<span class="acc">=== 시나리오 2: 잔액 부족 후원 (9999P) → ROLLBACK ===</span>
+  <span class="hl-mint">✅</span> 에러 발생: 잔액 부족: 195 &lt; 9999
+  <span class="hl-mint">✅</span> alice 잔액 그대로: 195
+  <span class="hl-mint">✅</span> bob   잔액 그대로: 190
+  <span class="hl-mint">✅</span> post  tip_total 그대로: 10
+  <span class="hl-mint">✅</span> ledger 행 그대로: 4
+
+<span class="acc">=== 시나리오 3: 좋아요 토글 멱등성 ===</span>
+  <span class="hl-mint">✅</span> 첫 클릭: like_count +1: 3
+  <span class="hl-mint">✅</span> 두 번째 클릭(해제): 원상복귀: 2
+
+🎉 <span class="hl-mint">모든 트랜잭션 검증 통과</span></div>
+
+    <div class="col" style="flex:1; gap:24px;">
+      <div class="card elevated">
+        <div class="tag mint mono" style="margin-bottom:16px;">정상 후원</div>
+        <p class="body" style="margin:0;">
+          잔액 두 곳 + tip_total + ledger 모두 <span class="hl-mint">동시에</span> 변한다.
+          중간 상태 없음.
+        </p>
+      </div>
+      <div class="card" style="border-color:rgba(244,114,182,0.4);">
+        <div class="tag pink mono" style="margin-bottom:16px;">잔액 부족 → ROLLBACK</div>
+        <p class="body" style="margin:0;">
+          에러 발생 후 <span class="hl-mint">네 상태 모두 그대로</span>.
+          트랜잭션의 가장 직접적인 증거.
+        </p>
+      </div>
+      <div class="card">
+        <div class="tag mint mono" style="margin-bottom:16px;">DB CHECK 제약</div>
+        <p class="body" style="margin:0;">
+          <span class="mono hl-mint">credit_balance &gt;= 0</span>,
+          자기 자신 팔로우, 중복 좋아요 — 모두 DB 단에서 거부.
+        </p>
+      </div>
+    </div>
+
+  </div>
+
+  <div class="footer">
+    <span class="left">MiniSNS · DB 과제</span>
+    <span class="pageno">10 / 12</span>
+  </div>
+</section>
+</body></html>

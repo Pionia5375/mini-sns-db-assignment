@@ -1,0 +1,55 @@
+<!doctype html>
+<html lang="ko"><head><meta charset="utf-8"><link rel="stylesheet" href="../style.css"></head>
+<body>
+<section class="slide">
+
+  <div class="eyebrow"><span class="num">11</span><span>회고 · 다음 단계</span></div>
+
+  <h2 class="h-1" style="margin-bottom:64px;">
+    트랜잭션은 <span class="hl-mint">설계와 함께</span> 가야 의미가 있다.
+  </h2>
+
+  <div class="col-2" style="margin-bottom:64px;">
+
+    <div class="card">
+      <div class="tag mint mono" style="margin-bottom:28px;">배운 점</div>
+      <ul class="check-list" style="font-size:28px;">
+        <li>트랜잭션은 안전망. <span class="hl-mint">설계가 같이</span> 가야 의미가 있다.</li>
+        <li>비정규화로 <span class="hl-mint">성능</span>, 트랜잭션으로 <span class="hl-mint">정합성</span>.</li>
+        <li>시연 캡쳐 중 <span class="hl-amber mono">BIGINT</span> 캐스팅 버그를 잡았다.</li>
+      </ul>
+    </div>
+
+    <div class="card">
+      <div class="tag amber mono" style="margin-bottom:28px;">다음 단계</div>
+      <ul class="check-list" style="font-size:28px;">
+        <li>카운터 충돌 대비 <span class="hl-mint mono">outbox</span> 패턴 도입.</li>
+        <li>JWT 직접 구현 → 표준 세션 라이브러리 교체.</li>
+        <li><span class="hl-mint mono">Vercel + Neon</span> 으로 클라우드 배포.</li>
+      </ul>
+    </div>
+
+  </div>
+
+  <div style="display:flex; justify-content:space-between; align-items:flex-end;">
+    <div>
+      <p class="h-3" style="margin:0;">
+        고맙습니다.
+      </p>
+      <p class="body lg muted mono" style="margin-top:18px;">
+        github.com/&lt;your-id&gt;/db-assignment
+      </p>
+    </div>
+    <div style="display:flex; gap:18px;">
+      <span class="tag mint">PostgreSQL 16</span>
+      <span class="tag">Next.js 16</span>
+      <span class="tag">100 % SQL</span>
+    </div>
+  </div>
+
+  <div class="footer">
+    <span class="left">MiniSNS · DB 과제</span>
+    <span class="pageno">12 / 12</span>
+  </div>
+</section>
+</body></html>

@@ -1,0 +1,71 @@
+<!doctype html>
+<html lang="ko"><head><meta charset="utf-8"><link rel="stylesheet" href="../style.css"></head>
+<body>
+<section class="slide">
+
+  <div class="eyebrow"><span class="num">06</span><span>Transaction #2 · 팔로우 토글</span></div>
+
+  <h2 class="h-2" style="margin-bottom:48px;">
+    한 액션이 <span class="hl-mint">세 갈래</span>로 갈라진다.
+  </h2>
+
+  <div class="row" style="gap:48px;">
+
+    <div style="flex:1.3;">
+      <div class="code sm"><span class="com">// 데드락 방지: id 오름차순 잠금</span>
+<span class="key">const</span> [first, second] = [me, other].<span class="fn">sort</span>();
+<span class="key">await</span> tx.<span class="fn">query</span>(
+  <span class="str">"SELECT id FROM users WHERE id = $1 <span class="acc">FOR UPDATE</span>"</span>, [first]);
+<span class="key">await</span> tx.<span class="fn">query</span>(
+  <span class="str">"SELECT id FROM users WHERE id = $1 <span class="acc">FOR UPDATE</span>"</span>, [second]);
+
+<span class="com">// 1) follows 행 INSERT / DELETE</span>
+<span class="key">await</span> tx.<span class="fn">query</span>(
+  <span class="str">"INSERT INTO follows (follower_id, followee_id)</span>
+<span class="str">   VALUES ($1, $2) ON CONFLICT DO NOTHING"</span>);
+
+<span class="com">// 2) follower.following_count ±1</span>
+<span class="key">await</span> tx.<span class="fn">query</span>(
+  <span class="str">"UPDATE users SET following_count = following_count + 1</span>
+<span class="str">   WHERE id = $1"</span>, [me]);
+
+<span class="com">// 3) followee.follower_count ±1</span>
+<span class="key">await</span> tx.<span class="fn">query</span>(
+  <span class="str">"UPDATE users SET follower_count = follower_count + 1</span>
+<span class="str">   WHERE id = $1"</span>, [other]);</div>
+    </div>
+
+    <div class="col" style="flex:1; gap:32px;">
+      <div class="card elevated">
+        <div class="tag mint mono" style="margin-bottom:16px;">세 변화 한 단위</div>
+        <p class="body" style="margin:0;">
+          follows 행 + 두 사용자 카운터 ± 1.
+          모두 성공해야만 <span class="mono hl-mint">COMMIT</span>,
+          하나라도 실패하면 <span class="mono hl-pink">ROLLBACK</span>.
+        </p>
+      </div>
+      <div class="card">
+        <div class="tag pink mono" style="margin-bottom:16px;">⚠ 데드락 시나리오</div>
+        <p class="body" style="margin:0;">
+          A→B 와 B→A 동시 팔로우.<br>
+          순서 없이 잠그면 서로 기다리다 멈춤.
+        </p>
+      </div>
+      <div class="card">
+        <div class="tag mint mono" style="margin-bottom:16px;">방지 패턴</div>
+        <p class="body" style="margin:0;">
+          두 사용자 행을 항상 <span class="mono hl-mint">id 오름차순</span>으로
+          <span class="mono hl-mint">FOR UPDATE</span>.
+          → 순환 대기 자체가 성립 불가.
+        </p>
+      </div>
+    </div>
+
+  </div>
+
+  <div class="footer">
+    <span class="left">MiniSNS · DB 과제</span>
+    <span class="pageno">07 / 12</span>
+  </div>
+</section>
+</body></html>

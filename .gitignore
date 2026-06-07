@@ -1,0 +1,23 @@
+# macOS
+.DS_Store
+
+# 환경
+.env
+.env.local
+
+# Node / Next.js (app/ 안)
+app/node_modules/
+app/.next/
+app/out/
+app/.turbo/
+
+# 슬라이드 빌드 산출물 (HTML 원본만 추적)
+deck/assets/
+
+# 에이전트 로컬 상태
+.omc/
+app/.omc/
+app/AGENTS.md
+app/CLAUDE.md
+
+# Docker 볼륨 마운트 데이터는 Docker 가 관리
