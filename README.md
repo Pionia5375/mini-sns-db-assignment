@@ -6,6 +6,11 @@ PostgreSQL을 백엔드 DBMS로 사용하는 미니 SNS.
 
 > 과제 요건 — PostgreSQL을 활용한 웹 서비스, 백엔드의 Relation/Query/Transaction 정의 및 활용
 
+- 🌐 **라이브 데모**: <https://mini-sns-db.vercel.app>
+- 🐘 **DBMS**: PostgreSQL 17 on Neon (Singapore)
+- ▲ **배포**: Vercel (자동 배포: `main` 브랜치 푸시 시)
+- 🔑 **시연 계정**: `alice@example.com` … `eve@example.com` / 비밀번호 `password`
+
 ---
 
 ## 빠른 실행
