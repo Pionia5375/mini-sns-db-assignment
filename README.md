@@ -39,7 +39,7 @@ npm run db:test
 
 ```
 .
-├── docker-compose.yml         # PostgreSQL 16 컨테이너
+├── docker-compose.yml         # PostgreSQL 17 컨테이너 (로컬 개발용)
 ├── db/init/01_schema.sql      # 컨테이너 첫 부팅 시 자동 실행 (DDL)
 └── app/                       # Next.js 16 앱
     ├── app/
@@ -190,7 +190,7 @@ SELECT cl.*, uf.username AS from_username, ut.username AS to_username
 
 ## 기술 스택
 
-- **DBMS**: PostgreSQL 16 (Docker)
+- **DBMS**: PostgreSQL 17 (로컬 Docker · 프로덕션 Neon)
 - **백엔드**: Next.js 16 Server Actions + `pg` (의도적으로 ORM 미사용, SQL 직접 작성)
 - **세션**: jose (JWT in HttpOnly cookie), bcryptjs
 - **프론트**: React 19 + Tailwind v4
